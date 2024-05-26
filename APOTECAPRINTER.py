@@ -2,6 +2,7 @@ import subprocess
 import tkinter as tk
 from tkinter import *
 import pyuac
+from tkinter.messagebox import askyesno, askquestion
 # Dropdown menu options 
 options = [] 
 
@@ -34,10 +35,11 @@ def main():
     root.geometry( "600x600" ) 
     # Set the original text
     greeting = tk.Label(text="Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix")
-    # Change the label text 
+    # Change the label text and confirmation window
     def show(): 
         sol = clicked.get()
-        subprocess.run(r"Status.bat"+" "+sol,)
+        confirmation(sol)
+        
     # datatype of menu text 
     clicked = StringVar() 
     # initial menu text 
@@ -49,7 +51,15 @@ def main():
     # Create button, it will change label text 
     button = Button( root , text = "click Me" , command = show ).pack() 
     # Execute tkinter 
-    root.mainloop() 
+    root.mainloop()
+
+
+def confirmation(name):
+    qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(name))
+    if qm:
+        subprocess.run(r"Status.bat"+" "+ name)
+
+        
 
 if __name__ == "__main__":
     if not pyuac.isUserAdmin():

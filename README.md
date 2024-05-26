@@ -1,9 +1,7 @@
 
 
 # Printer Queue Removal
-This is a very simple tool that could be placed within various PS devices, where if the user is having a printer issue, they can click this to clear the print queue, and if it doesn't, they can call the help desk line.
-
-ETA: I give it 2-3 days once I acquire the needed information.
+This is a very simple tool that I wanted to create due to a certain issue we have within the compnay I am emploted at. Long story short, we want our users to quickly clear the queues with minimal possibility for the user to make a mistake. In this case just to clear the printer queue for the user.
 
 ### Core Design:
 1. It should allow the user to select the printer type they are troubleshooting, which would be a certain set of models that would have the same name on various sites when installed.
@@ -50,12 +48,3 @@ However at the same time I am looking at alternatives at:
 - https://superuser.com/questions/1403776/how-to-find-the-ip-of-a-network-printer-from-command-line 
 - https://superuser.com/questions/61659/how-do-i-add-a-standard-tcp-ip-printer-port-from-a-command-line
 - https://community.spiceworks.com/t/need-script-to-bulk-change-printer-port-ip-addresses-on-2012-r2-print-server/559431/13
-
-# Project #2: APOTECA Resources
-
-
-Something that is extremely frustrating is that there isn't a centralized resource; instead, we have to navigate a complex network path that is not user-friendly.
-
-This way, instead of everyone relying on others to provide where they are, they can quickly get sent to the path through a simple program.
-
-Now what would be really helpful is to have an internal database that contains the DATS, a US version of SWGA, with the only use being to check if we have this drug and acquire the image and IDE from the farmaci folder.
