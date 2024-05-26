@@ -42,6 +42,15 @@ What we really want is to just efficiently grab the printer names.
 
 In less than an hour, I was able to determine an efficient way to display all the printers the PC has at its disposal, and later on, we can filter said list to only show the Zebra printers. This was very easy to do, along with the extremely simple implementation of arguments in this program. Now what I will be researching for around 20 minutes is how to set the port to a different IP address.
 
+
+From our little discovery we were able to find documentation of Windows prnport (yes very mature I am aware). So it seems what we can do to the printer is change it's settings which could be possible from this documentation:
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prnport
+
+However at the same time I am looking at alternatives at:
+- https://superuser.com/questions/1403776/how-to-find-the-ip-of-a-network-printer-from-command-line 
+- https://superuser.com/questions/61659/how-do-i-add-a-standard-tcp-ip-printer-port-from-a-command-line
+- https://community.spiceworks.com/t/need-script-to-bulk-change-printer-port-ip-addresses-on-2012-r2-print-server/559431/13
+
 # Project #2: APOTECA Resources
 
 
