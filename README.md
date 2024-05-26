@@ -1,51 +1,52 @@
-# APOTECA Internal Tools
 
-## Printer Queue Removal
-This is a very simple tool tht could be place within various PS devices, where if the user is having a printer issue they can click this to clear the print queue and if it doesnt they can call the help desk line
 
-ETA: I give it 2-3 days once I acquire the needed information
+# Printer Queue Removal
+This is a very simple tool that could be placed within various PS devices, where if the user is having a printer issue, they can click this to clear the print queue, and if it doesn't, they can call the help desk line.
+
+ETA: I give it 2-3 days once I acquire the needed information.
 
 ### Core Design:
-1. it should allow the user to select the Printer type they are troubleshooting which would be a certain set of models that would have tjhe same name in various sites when installed
+1. It should allow the user to select the printer type they are troubleshooting, which would be a certain set of models that would have the same name on various sites when installed.
 
-2. Once the user clicks then the printer queue is cleeared, print spooler is restarted, and a test page is printer
+2. Once the user clicks, the printer queue is cleared, the print spooler is restarted, and a test page is printed.
 
-3. if nothing occurs what will occur is that the help desk line would appear so that they may contact us.
+3. If nothing occurs, what will occur is that the help desk line will appear so that they may contact us.
 
 ### Ideal features
-    What we would like is to not only stop the spooler, and print a test page but also just change the tcp port address
-    I believe it is possible through the following line of code(https://superuser.com/questions/61659/how-do-i-add-a-standard-tcp-ip-printer-port-from-a-command-line):
+What we would like is to not only stop the spooler and print a test page, but also just change the TCP port address.
 
-    '''
-    rundll32 printui.dll,PrintUIEntry /if /b "PDFPrinter" /f %windir%\inf\ntprint.inf /r  "IP_157.57.50.98" /m "HP Laserjet 4000 Series PCL"
-    '''
+I believe it is possible through the following line of code (https://superuser.com/questions/61659/how-do-i-add-a-standard-tcp-ip-printer-port-from-a-command-line):
 
-    Now the main challange is the following finding the correct printer. You see what I would like is that is for the PS systems to allow the user to select the correct 
-    printer to do the tasks. This is something I would like to automate quickly, i wonder how many printers the PS systems display through CMD to see if we can just quickly query how many and then allow the user to select the correct one
-    and then from there select the correct printerIP.
+```
+rundll32 printui.dll,PrintUIEntry /if /b "PDFPrinter" /f %windir%\inf\ntprint.inf /r "IP_157.57.50.98" /m "HP Laserjet 4000 Series PCL"
+```
 
-    Overall We would like the printername regardless so the rest of our scripts can work as expected
+Now the main challenge is finding the correct printer. You see, what I would like is for the PS systems to allow the user to select the correct printer to do the tasks. This is something I would like to automate quickly. I wonder how many printers the PS systems display through CMD to see if we can just quickly query how many and then allow the user to select the correct one, and then from there select the correct printer IP.
+
+Overall, we would like the printer name regardless so the rest of our scripts can work as expected.
+To place it as a parameter, all I need is:
+
+    ```
+    from subprocess import *
+    p = Popen(['run-client.bat', param1, param2], stdout=PIPE, stderr=PIPE)
+    output, errors = p.communicate()
+    p.wait() # wait for process to terminate
+    ```
+   
+   
+where in the batch I just need to use %1 to reference our input
+
+What we really want is to just efficiently grab the printer names.
+
+### 5/25/2024
+
+In less than an hour, I was able to determine an efficient way to display all the printers the PC has at its disposal, and later on, we can filter said list to only show the Zebra printers. This was very easy to do, along with the extremely simple implementation of arguments in this program. Now what I will be researching for around 20 minutes is how to set the port to a different IP address.
+
+# Project #2: APOTECA Resources
 
 
-    To place it as a parameter all I need is:
-    '''
-    from subprocess import *
-    p = Popen(['run-client.bat', param1, param2], stdout=PIPE, stderr=PIPE)
-    output, errors = p.communicate()
-    p.wait() # wait for process to terminate
-    '''
-    
-Where in the batch I just need to use %1 to reference ou string input
+Something that is extremely frustrating is that there isn't a centralized resource; instead, we have to navigate a complex network path that is not user-friendly.
 
-What We really want is to just effeciently grab the printer names
+This way, instead of everyone relying on others to provide where they are, they can quickly get sent to the path through a simple program.
 
-    Of course what also helps is a logger so we can create one
-
-
-## APOTECA resources
-
-Soemthing that is extremely frustrating is that there isn't a centralized resource instead we have to navigate a complex network plath thats not user freindly
-
-This way isnetad of everyone relying on the othwrs to provide where they are they can quickly get sent to the path through a simple program
-
-Now what would be really helpful is to have an internal database that contains the DATS, a US version of SWGA with the only use to be to check if we have this drug and aquire the img and IDE from the farmaci folder.
+Now what would be really helpful is to have an internal database that contains the DATS, a US version of SWGA, with the only use being to check if we have this drug and acquire the image and IDE from the farmaci folder.
