@@ -27,11 +27,11 @@ Overall, we would like the printer name regardless so the rest of our scripts ca
 To place it as a parameter, all I need is:
 
     ```
-    from subprocess import *
-    p = Popen(['run-client.bat', param1, param2], stdout=PIPE, stderr=PIPE)
-    output, errors = p.communicate()
-    p.wait() # wait for process to terminate
-    ```
+    from subprocess import *
+    p = Popen(['run-client.bat', param1, param2], stdout=PIPE, stderr=PIPE)
+    output, errors = p.communicate()
+    p.wait() # wait for process to terminate
+    ```
    
    
 where in the batch I just need to use %1 to reference our input
