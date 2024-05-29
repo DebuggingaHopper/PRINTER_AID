@@ -1,8 +1,10 @@
 import subprocess
 import tkinter as tk
 from tkinter import *
+import pywin32_system32
 import pyuac
 from tkinter.messagebox import askyesno, askquestion
+import customtkinter
 # Dropdown menu options 
 options = [] 
 
@@ -30,26 +32,28 @@ def main():
     # We initialize the options list
     GetPrinters()
     # We create the root tkinter object
-    root = Tk() 
+    root = customtkinter.CTk(fg_color="#333333") 
+
     # Adjust size 
-    root.geometry( "600x600" ) 
+    root.geometry( "500x150" ) 
     # Set the original text
-    greeting = tk.Label(text="Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix")
+    custom_font =("Times",10,'bold')
+    greeting = customtkinter.CTkLabel(master=root, text="Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix", font=custom_font, text_color="white")
     # Change the label text and confirmation window
-    def show(): 
-        sol = clicked.get()
-        confirmation(sol)
         
     # datatype of menu text 
     clicked = StringVar() 
     # initial menu text 
     clicked.set("Click me to find your printer") 
     # Create Dropdown menu 
-    drop = OptionMenu( root , clicked , *options ) 
+    def optionmenu_callback(choice):
+        sol = choice
+        confirmation(sol)
+    drop = customtkinter.CTkOptionMenu(master=root , values=options , command=optionmenu_callback ) 
     greeting.pack()
-    drop.pack() 
+    drop.pack(padx=20, pady=20) 
     # Create button, it will change label text 
-    button = Button( root , text = "click Me" , command = show ).pack() 
+    # button = customtkinter.CTkButton( master=root , text = "click Me" , command = show ).pack() 
     # Execute tkinter 
     root.mainloop()
 
