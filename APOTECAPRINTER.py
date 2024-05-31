@@ -43,17 +43,14 @@ class App(customtkinter.CTk):
         self.textbox.insert("0.0","Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix")
 
         def optionmenu_callback(choice):
-            sol = choice
-            confirmation(sol)
+            self.qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(choice))
+            if self.qm:
+                subprocess.run(r"Status.bat"+" "+ choice)
+
         self.dropbox = customtkinter.CTkOptionMenu(master=self , values=options , command=optionmenu_callback,button_color="#aa1c2d",button_hover_color="#ba747e",fg_color="#ffffff",text_color="#100c08") 
 
         self.textbox.pack()
         self.dropbox.pack(padx=20, pady=20) 
-
-def confirmation(name):
-    qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(name))
-    if qm:
-        subprocess.run(r"Status.bat"+" "+ name)
 
 if __name__ == "__main__":
     if not pyuac.isUserAdmin():
