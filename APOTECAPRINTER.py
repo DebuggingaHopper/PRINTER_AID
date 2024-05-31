@@ -1,10 +1,11 @@
 import subprocess
 import tkinter as tk
 from tkinter import *
-import pywin32_system32
 import pyuac
 from tkinter.messagebox import askyesno, askquestion
 import customtkinter
+# We set dark mode
+customtkinter.set_appearance_mode("Dark")
 # Dropdown menu options 
 options = [] 
 
@@ -27,46 +28,36 @@ def GetPrinters():
         if(len(entries)>4):
             options.append(entries[1])
 
-
-def main():
-    # We initialize the options list
-    GetPrinters()
-    # We create the root tkinter object
-    root = customtkinter.CTk(fg_color="#333333") 
-
-    # Adjust size 
-    root.geometry( "500x150" ) 
-    # Set the original text
-    custom_font =("Times",10,'bold')
-    greeting = customtkinter.CTkLabel(master=root, text="Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix", font=custom_font, text_color="white")
-    # Change the label text and confirmation window
+# We set the App Class
+class App(customtkinter.CTk):
+    def __init__(self):
+        super().__init__()
+        GetPrinters()
+        self.geometry( "500x150" ) 
+        self.iconbitmap('OIP.ico')
+        self.title("APOPrinter")
         
-    # datatype of menu text 
-    clicked = StringVar() 
-    # initial menu text 
-    clicked.set("Click me to find your printer") 
-    # Create Dropdown menu 
-    def optionmenu_callback(choice):
-        sol = choice
-        confirmation(sol)
-    drop = customtkinter.CTkOptionMenu(master=root , values=options , command=optionmenu_callback ) 
-    greeting.pack()
-    drop.pack(padx=20, pady=20) 
-    # Create button, it will change label text 
-    # button = customtkinter.CTkButton( master=root , text = "click Me" , command = show ).pack() 
-    # Execute tkinter 
-    root.mainloop()
+        # How to make custom font: custom_font =("Times",10,'bold')
+        self.textbox =  customtkinter.CTkTextbox(self, width=450,height=50,text_color="#ffffff")
+        self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")
+        self.textbox.insert("0.0","Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix")
 
+        def optionmenu_callback(choice):
+            sol = choice
+            confirmation(sol)
+        self.dropbox = customtkinter.CTkOptionMenu(master=self , values=options , command=optionmenu_callback,button_color="#aa1c2d",button_hover_color="#ba747e",fg_color="#ffffff",text_color="#100c08") 
+
+        self.textbox.pack()
+        self.dropbox.pack(padx=20, pady=20) 
 
 def confirmation(name):
     qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(name))
     if qm:
         subprocess.run(r"Status.bat"+" "+ name)
 
-        
-
 if __name__ == "__main__":
     if not pyuac.isUserAdmin():
         pyuac.runAsAdmin()
     else:        
-        main() 
+        app = App()
+        app.mainloop()
