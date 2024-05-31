@@ -36,7 +36,7 @@ class App(customtkinter.CTk):
         self.geometry( "500x150" ) 
         self.iconbitmap('OIP.ico')
         self.title("APOPrinter")
-        
+
         # How to make custom font: custom_font =("Times",10,'bold')
         self.textbox =  customtkinter.CTkTextbox(self, width=450,height=50,text_color="#ffffff")
         self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")
