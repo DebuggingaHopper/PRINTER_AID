@@ -38,6 +38,7 @@ class App(customtkinter.CTk):
         def optionmenu_callback(choice):
             self.qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(choice))
             if self.qm:
+                # What is interesting is that even when we restart the service, and clear the queue, it doesnt finish the process to print the test page
                 subprocess.run(r"Status.bat"+" "+ choice)
         self.dropbox = customtkinter.CTkOptionMenu(master=self , values=options , command=optionmenu_callback,button_color="#aa1c2d",button_hover_color="#ba747e",fg_color="#ffffff",text_color="#100c08") 
         self.textbox.pack()
