@@ -1,3 +1,5 @@
+# Printer Queue Tool 
+# 6/2/2024 - DebuggingaHopper
 import subprocess
 from tkinter import *
 import pyuac
@@ -5,7 +7,6 @@ from tkinter.messagebox import askyesno, askquestion
 import customtkinter
 import win32serviceutil
 from threading import *
-
 def GetPrinters():
     options = [] 
     win32serviceutil.RestartService("Spooler", ".")
