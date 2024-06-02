@@ -1,5 +1,4 @@
 import subprocess
-import tkinter as tk
 from tkinter import *
 import pyuac
 from tkinter.messagebox import askyesno, askquestion
@@ -38,7 +37,6 @@ class App(customtkinter.CTk):
         self.geometry( "500x150" ) 
         self.iconbitmap('OIP.ico')
         self.title("APOPrinter")
-        # How to make custom font: custom_font =("Times",10,'bold')
         self.textbox =  customtkinter.CTkTextbox(self, width=450,height=50,text_color="#ffffff")
         self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")
         self.textbox.insert("0.0","Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix")
@@ -47,8 +45,8 @@ class App(customtkinter.CTk):
             if qm:
              # What wass interesting is that even when we restart the service, and clear the queue, it would crash the program occasioanlly
              # This is because we didn't implement a seperate thread for this asynchronous call
-             download_thread = AsyncPrinter(choice)
-             download_thread.start()
+             printer_thread = AsyncPrinter(choice)
+             printer_thread.start()
         self.dropbox = customtkinter.CTkOptionMenu(master=self , values=options , command=optionmenu_callback,button_color="#aa1c2d",button_hover_color="#ba747e",fg_color="#ffffff",text_color="#100c08") 
         self.textbox.pack()
         self.dropbox.pack(padx=20, pady=20) 
