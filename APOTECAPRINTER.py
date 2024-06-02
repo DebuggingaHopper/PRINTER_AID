@@ -5,11 +5,10 @@ import pyuac
 from tkinter.messagebox import askyesno, askquestion
 import customtkinter
 import win32serviceutil
-
-customtkinter.set_appearance_mode("Dark")
-options = [] 
+from threading import *
 
 def GetPrinters():
+    options = [] 
     win32serviceutil.RestartService("Spooler", ".")
     data=subprocess.check_output(['wmic', 'printer', 'list', 'brief']).decode('utf-8').split('\r\r\n')
     data=data[1:]
@@ -23,11 +22,19 @@ def GetPrinters():
             options.append(entries[0])
         if(len(entries)>4):
             options.append(entries[1])
+    return options
 
-class App(customtkinter.CTk):
-    def __init__(self):
+class AsyncPrinter(Thread):
+    def __init__(self, choice):
+        self.choice = choice
         super().__init__()
-        GetPrinters()
+    def run(self):
+        subprocess.run(r"Status.bat"+" "+ self.choice,shell=True, check=True)
+        
+class App(customtkinter.CTk):
+    def __init__(self, options):
+        super().__init__()
+        customtkinter.set_appearance_mode("Dark")
         self.geometry( "500x150" ) 
         self.iconbitmap('OIP.ico')
         self.title("APOPrinter")
@@ -36,10 +43,12 @@ class App(customtkinter.CTk):
         self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), sticky="nsew")
         self.textbox.insert("0.0","Welcome to the APOTECA Printer Assistant, Please select the printer model you would like to fix")
         def optionmenu_callback(choice):
-            self.qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(choice))
-            if self.qm:
-                # What is interesting is that even when we restart the service, and clear the queue, it doesnt finish the process to print the test page
-                subprocess.run(r"Status.bat"+" "+ choice)
+            qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(choice))
+            if qm:
+             # What wass interesting is that even when we restart the service, and clear the queue, it would crash the program occasioanlly
+             # This is because we didn't implement a seperate thread for this asynchronous call
+             download_thread = AsyncPrinter(choice)
+             download_thread.start()
         self.dropbox = customtkinter.CTkOptionMenu(master=self , values=options , command=optionmenu_callback,button_color="#aa1c2d",button_hover_color="#ba747e",fg_color="#ffffff",text_color="#100c08") 
         self.textbox.pack()
         self.dropbox.pack(padx=20, pady=20) 
@@ -47,6 +56,7 @@ class App(customtkinter.CTk):
 if __name__ == "__main__":
     if not pyuac.isUserAdmin():
         pyuac.runAsAdmin()
-    else:        
-        app = App()
+    else:   
+        options = GetPrinters() 
+        app = App(options)
         app.mainloop()
