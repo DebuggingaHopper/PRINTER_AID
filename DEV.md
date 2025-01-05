@@ -44,7 +44,9 @@ In less than an hour, I was able to determine an efficient way to display all th
 From our little discovery we were able to find documentation of Windows prnport (yes very mature I am aware). So it seems what we can do to the printer is change it's settings which could be possible from this documentation:
 https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/prnport
 
-However at the same time I am looking at alternatives at:
-- https://superuser.com/questions/1403776/how-to-find-the-ip-of-a-network-printer-from-command-line 
-- https://superuser.com/questions/61659/how-do-i-add-a-standard-tcp-ip-printer-port-from-a-command-line
-- https://community.spiceworks.com/t/need-script-to-bulk-change-printer-port-ip-addresses-on-2012-r2-print-server/559431/13
+
+# What happened to this Python Program
+
+Well at the time this document is being modified I completed a C# Windows Form program that does the job of this program but mopre tailored to the customer. This program was a good start however it required the user to provide input which is something I wanted to prevent in the actual product as the main philosphy of the QueueManager was "Let the customer proceed with their work without adding more work".
+
+The C# winforms project is currently on a private hosted server and will be released to my public Github once I have changed a few things.
