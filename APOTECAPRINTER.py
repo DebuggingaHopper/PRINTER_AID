@@ -44,7 +44,7 @@ class App(customtkinter.CTk):
         def optionmenu_callback(choice):
             qm = askyesno(title='Confirmation', message='Are you sure that you want to clear {}'.format(choice))
             if qm:
-             # What wass interesting is that even when we restart the service, and clear the queue, it would crash the program occasioanlly
+             # What was interesting is that even when we restart the service, and clear the queue, it would crash the program occasioanlly
              # This is because we didn't implement a seperate thread for this asynchronous call
              printer_thread = AsyncPrinter(choice)
              printer_thread.start()
